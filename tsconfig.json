@@ -4,6 +4,10 @@
     "esModuleInterop": true,
     "allowJs": true,
     "noUncheckedIndexedAccess": true,
+    "allowImportingTsExtensions": true,
+    "noEmit": true,
+    "emitDeclarationOnly": true,
+    "composite": true,
     "strict": true
   },
   "files": [],
