@@ -1,7 +1,7 @@
 import { useDispatch, useSelector } from "react-redux";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 
-import { setUsername, setPassword } from "../store/store";
+import { setUsername, setPassword, setIsAuthenticated } from "../store/store";
 import { FetchWrapper } from "../utils/FetchWrapper";
 
 import type { RootState } from "../store/store";
@@ -9,6 +9,7 @@ import type {ErrorAuthResponse, SuccessAuthResponse, UserAuth} from "./types";
 
 function LoginForm() {
   const dispatch = useDispatch();
+  const navigate = useNavigate();
 
   const username = useSelector((state: RootState) => state.username);
   const password = useSelector((state: RootState) => state.password);
@@ -34,8 +35,10 @@ function LoginForm() {
     handleSetPassword('');
 
     if ('access_token' in response) {
-      console.log(response);
+      dispatch(setIsAuthenticated(true));
       sessionStorage.setItem('accessToken', response.access_token);
+
+      navigate('/dispatcher');
     }
   }
   

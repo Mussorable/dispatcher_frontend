@@ -1,12 +1,14 @@
 import { useDispatch, useSelector } from "react-redux";
+import { useNavigate } from "react-router-dom";
 import { Link } from "react-router-dom";
-import { setUsername, setPassword, setEmail, setRepeatPassword } from "../store/store";
+import { setUsername, setPassword, setEmail, setRepeatPassword, setIsAuthenticated } from "../store/store";
 import { RootState } from "../store/store";
 import { FetchWrapper } from "../utils/FetchWrapper";
 import { ErrorAuthResponse, SuccessAuthResponse } from "./types";
 
 function RegistrationForm() {
   const dispatch = useDispatch();
+  const navigate = useNavigate();
 
   const email = useSelector((state: RootState) => state.email);
   const username = useSelector((state: RootState) => state.username);
@@ -41,10 +43,11 @@ function RegistrationForm() {
       console.log(response);
 
       if ('access_token' in response) {
+        dispatch(setIsAuthenticated(true));
         sessionStorage.setItem('accessToken', response.access_token);
+
+        navigate('/dispatcher');
       }
-    } else {
-      return;
     }
 
     handleSetEmail('');

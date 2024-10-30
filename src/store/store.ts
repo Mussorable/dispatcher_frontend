@@ -5,7 +5,7 @@ const store = configureStore({
   reducer: authSlice.reducer,
 });
 
-const {setUsername, setPassword, setRepeatPassword, setEmail} = authSlice.actions;
+const {setUsername, setPassword, setRepeatPassword, setEmail, setIsAuthenticated} = authSlice.actions;
 
 export type RootState = ReturnType<typeof store.getState>;
 export {
@@ -13,5 +13,6 @@ export {
   setPassword,
   setRepeatPassword,
   setEmail,
-  setUsername
+  setUsername,
+  setIsAuthenticated
 };

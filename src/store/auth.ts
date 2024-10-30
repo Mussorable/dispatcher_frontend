@@ -6,7 +6,8 @@ const authSlice = createSlice({
     username: "",
     password: "",
     repeatPassword: "",
-    email: ""
+    email: "",
+    isAuthenticated: false
   },
   reducers: {
     setUsername: (state, action: PayloadAction<string>) => {
@@ -20,6 +21,9 @@ const authSlice = createSlice({
     },
     setEmail: (state, action: PayloadAction<string>) => {
       state.email = action.payload;
+    },
+    setIsAuthenticated: (state, action: PayloadAction<boolean>) => {
+      state.isAuthenticated = action.payload
     }
   }
 });
