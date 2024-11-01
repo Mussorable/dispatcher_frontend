@@ -15,7 +15,7 @@ function Header() {
   
   return (
   <>
-    <header className="w-full absolute index-1 bg-gray-200 border-solid border-b-4 border-sky-500 top-0">
+    <header className="w-full absolute z-[1] bg-gray-200 border-solid border-b-4 border-sky-500 top-0">
       <nav className="container mx-auto flex justify-between gap-3 items-center py-4 px-6">
         <div>Brand</div>
         <ul className="flex justify-between gap-2 w-[34rem] items-center text-sm">

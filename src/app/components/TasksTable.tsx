@@ -4,7 +4,7 @@ import DataInformation from "./dispatcher/DataInformation";
 
 function TasksTable() {
   return(
-    <div className="flex-1 h-full">
+    <div className="flex-1 h-full relative">
       <TasksManagement />
       <Map />
       <DataInformation />
