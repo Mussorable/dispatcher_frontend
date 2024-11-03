@@ -1,27 +1,25 @@
 import { forwardRef } from "react";
 
 interface MousePosition {
-  position: {
-    x: number,
-    y: number
+  actions: {
+    [key: string]: () => void;
   };
 }
 
-const RightClickContext = forwardRef<HTMLDivElement, MousePosition>(({ position }, ref) => {
+const RightClickContext = forwardRef<HTMLDivElement, MousePosition>(({ actions }, ref) => {
   return (
     <div
       ref={ref}
       className="absolute z-[2] shadow-md border-2 rounded-md bg-gray-50"
       style={{
-        top: position.y,
-        left: position.x,
+        top: 0,
+        left: 0,
       }}
     >
       <ul>
-        <li><button className="px-6 py-2 hover:bg-gray-100 transition duration-75 w-full text-left">Add</button></li>
-        <li><button className="px-6 py-2 hover:bg-gray-100 transition duration-75 w-full text-left">Edit</button></li>
-        <li><button className="px-6 py-2 hover:bg-gray-100 transition duration-75 w-full text-left">Delete</button></li>
-        <li><button className="px-6 py-2 hover:bg-gray-100 transition duration-75 w-full text-left">Connect</button></li>
+        {actions && Object.entries(actions).map(([actionName, actionFunc], key) => {
+          return <li key={key}><button className="px-6 py-2 hover:bg-gray-100 transition duration-75 w-full text-left" onClick={actionFunc}>{actionName}</button></li>
+        })}
       </ul>
     </div>
   );

@@ -11,8 +11,8 @@ function LoginForm() {
   const dispatch = useDispatch();
   const navigate = useNavigate();
 
-  const username = useSelector((state: RootState) => state.username);
-  const password = useSelector((state: RootState) => state.password);
+  const username = useSelector((state: RootState) => state.auth.username);
+  const password = useSelector((state: RootState) => state.auth.password);
 
   const fetchWrapper = new FetchWrapper(import.meta.env.VITE_TEST_URL);
 

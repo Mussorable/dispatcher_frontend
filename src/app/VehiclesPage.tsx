@@ -10,7 +10,7 @@ function VehiclesPage() {
   return(
     <>
       <Header />
-      <div className="max-w-6xl mx-auto px-4 pb-6 pt-[56px] bg-slate-200 border-x-2 border-blue-300">
+      <div className="max-w-6xl mx-auto px-4 pb-6 pt-[58px] bg-slate-200 border-x-2 border-blue-300">
         <h1 className="text-2xl my-4 block border-b-2 border-blue-200 font-bold">Vehicles page</h1>
         <div className="flex relative mx-4">
           <h3 className="text-xl flex-1 font-semibold">Trucks</h3>

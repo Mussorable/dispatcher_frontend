@@ -1,11 +1,18 @@
-import { configureStore } from "@reduxjs/toolkit";
+import { configureStore, combineReducers } from "@reduxjs/toolkit";
 import authSlice from "./auth";
+import tasksSlice from "./tasks";
+
+const rootReducer = combineReducers({
+  auth: authSlice.reducer,
+  tasks: tasksSlice.reducer
+})
 
 const store = configureStore({
-  reducer: authSlice.reducer,
+  reducer: rootReducer
 });
 
 const {setUsername, setPassword, setRepeatPassword, setEmail, setIsAuthenticated} = authSlice.actions;
+const {setBricks, setCity} = tasksSlice.actions;
 
 export type RootState = ReturnType<typeof store.getState>;
 export {
@@ -14,5 +21,7 @@ export {
   setRepeatPassword,
   setEmail,
   setUsername,
-  setIsAuthenticated
+  setIsAuthenticated,
+  setBricks,
+  setCity
 };

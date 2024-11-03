@@ -10,10 +10,10 @@ function RegistrationForm() {
   const dispatch = useDispatch();
   const navigate = useNavigate();
 
-  const email = useSelector((state: RootState) => state.email);
-  const username = useSelector((state: RootState) => state.username);
-  const password = useSelector((state: RootState) => state.password);
-  const repeatPassword = useSelector((state: RootState) => state.repeatPassword);
+  const email = useSelector((state: RootState) => state.auth.email);
+  const username = useSelector((state: RootState) => state.auth.username);
+  const password = useSelector((state: RootState) => state.auth.password);
+  const repeatPassword = useSelector((state: RootState) => state.auth.repeatPassword);
 
   const fetchWrapper = new FetchWrapper(import.meta.env.VITE_TEST_URL);
 

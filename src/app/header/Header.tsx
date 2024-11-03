@@ -1,7 +1,7 @@
 import { useDispatch } from "react-redux";
 import { useNavigate } from "react-router-dom";
-import { setIsAuthenticated } from "../../store/store";
 import { Link } from "react-router-dom";
+import { setIsAuthenticated } from "../../store/store";
 
 function Header() {
   const dispatch = useDispatch();
@@ -16,8 +16,8 @@ function Header() {
   return (
   <>
     <header className="w-full absolute z-[1] bg-gray-200 border-solid border-b-4 border-sky-500 top-0">
-      <nav className="container mx-auto flex justify-between gap-3 items-center py-4 px-6">
-        <div>Brand</div>
+      <nav className="container mx-auto flex justify-between gap-3 items-center py-1 px-6">
+        <img src="logo.webp" height={46} width={46} alt="web application logo" />
         <ul className="flex justify-between gap-2 w-[34rem] items-center text-sm">
           <li className=""><Link to={'/dispatcher'} className="">Dispatcher</Link></li>
           <li className=""><Link to={'/vehicles'} className="">Vehicles</Link></li>
