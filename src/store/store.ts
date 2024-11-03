@@ -12,7 +12,7 @@ const store = configureStore({
 });
 
 const {setUsername, setPassword, setRepeatPassword, setEmail, setIsAuthenticated} = authSlice.actions;
-const {setBricks, setCity} = tasksSlice.actions;
+const {setBricks, setData, setIsUnloadingPlace} = tasksSlice.actions;
 
 export type RootState = ReturnType<typeof store.getState>;
 export {
@@ -23,5 +23,6 @@ export {
   setUsername,
   setIsAuthenticated,
   setBricks,
-  setCity
+  setData,
+  setIsUnloadingPlace
 };

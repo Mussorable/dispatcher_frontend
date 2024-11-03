@@ -1,6 +1,6 @@
 import { useState, useRef } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { setBricks, setCity } from "../../../store/store";
+import { setBricks, setData, setIsUnloadingPlace } from "../../../store/store";
 
 import RightClickContext from "../../../utils/RightClickContext";
 
@@ -78,18 +78,19 @@ function TasksManagement() {
     console.log('Connect clicked');
   };
 
+  // Make changes in Brick
   const handleDoubleClick = (brick: Brick) => {
-    if (brick) {
-      setIsEditing(brick.id);
+    setIsEditing(brick.id);
+  }
+
+  const handleBrickBlur = (event: React.MouseEvent) => {
+    if (event.target === event.currentTarget) {
+      setIsEditing(null);
     }
   }
 
-  const handleChangeBrickData = (brick: Brick, newData: string) => {
-    dispatch(setCity({id: brick.id, newCity: newData}));
-  }
-
-  const handleBrickBlur = () => {
-    setIsEditing(null);
+  const handleChangeBrickColor = (brick: Brick, isUnloadingPlace: boolean) => {
+    dispatch(setIsUnloadingPlace({brickId: brick.id, isUnloadingPlace}));
   }
 
   return(
@@ -104,7 +105,7 @@ function TasksManagement() {
         }}
       />}
       <div 
-        className="flex-1 border-r-2 overflow-hidden relative bg-gray-100"
+        className="flex-1 border-r-2 overflow-hidden bg-gray-100"
         onWheel={e => handleMouseScale(e)}
         onMouseDown={e => handleMouseDown(e)}
         onMouseMove={e => handleMouseMove(e)}
@@ -123,39 +124,42 @@ function TasksManagement() {
             <div
               key={brick.id}
               tabIndex={0}
-              className="absolute border-2 border-blue-900 bg-blue-200 px-2 py-1 rounded-sm focus:border-blue-500 focus:bg-blue-300"
+              className={"absolute border-2 px-2 py-1 rounded-sm " + 
+                (brick.isUnloadingPlace ? 
+                  "border-pink-900 bg-pink-200 focus:border-pink-500 focus:bg-pink-300" : "border-blue-900 bg-blue-200 focus:border-blue-500 focus:bg-blue-300")}
               style={{
                 top: brick.yPosition,
                 left: brick.xPosition
               }}
+              onDoubleClick={() => handleDoubleClick(brick)}
             >
-              <div className="flex gap-2">
-                {isEditing === brick.id ? (
-                  <input 
-                    id={`change-city-brick-${brick.id}`}
-                    type="text" 
-                    className="flex-1 font-semibold uppercase max-w-24"
-                    autoFocus
-                    value={brick.city}
-                    onChange={e => handleChangeBrickData(brick, e.currentTarget.value)}/>
-                ) : (
-                  <span className="flex-1 font-semibold uppercase" onDoubleClick={() => handleDoubleClick(brick)}>{brick.city}</span>
-                )}
-                {isEditing === brick.id ? (
-                  <input 
-                    id={`change-client-brick-${brick.id}`}
-                    className="text-xs"
-                    type="text" 
-                    value={brick.client}
-                    onChange={e => handleChangeBrickData(brick, e.currentTarget.value)}/>
-                ) : (
-                  <span className="text-xs">{brick.client}</span>
-                )}
-              </div>
-              <div className="flex gap-2">
-                <span className="flex-1 font-extrabold uppercase">{brick.deliveryTime}</span>
-                <span className="text-xs">{brick.refNumber}</span>
-              </div>
+              {isEditing === brick.id ? (
+                <>
+                  <div onClick={() => handleChangeBrickColor(brick, false)} className="absolute border-2 border-blue-900 bg-blue-200 w-4 h-4 top-[-20px] left-0"></div>
+                  <div onClick={() => handleChangeBrickColor(brick, true)} className="absolute border-2 border-pink-900 bg-pink-200 w-4 h-4 top-[-20px] left-5"></div>
+                  <form action="">
+                    <div className="flex gap-2">
+                      <input onChange={e => dispatch(setData({brickId: brick.id, field: 'city', value: e.currentTarget.value}))} value={brick.city} id={`brick${brick.id}-city`} type="text" className="flex-1 font-semibold uppercase border-b-2"/>
+                      <input onChange={e => dispatch(setData({brickId: brick.id, field: 'client', value: e.currentTarget.value}))} value={brick.client} id={`brick${brick.id}-client`} type="text" className="text-xs border-b-2"/>
+                    </div>
+                    <div className="flex gap-2">
+                      <input onChange={e => dispatch(setData({brickId: brick.id, field: 'deliveryTime', value: e.currentTarget.value}))} value={brick.deliveryTime} id={`brick${brick.id}-delivery-time`} type="text" className="flex-1 font-extrabold uppercase"/>
+                      <input onChange={e => dispatch(setData({brickId: brick.id, field: 'refNumber', value: e.currentTarget.value}))} value={brick.refNumber} id={`brick${brick.id}-ref-number`} type="text" className="text-xs"/>
+                    </div>
+                  </form>
+                </>
+              ) : (
+                <>
+                  <div className="flex gap-2">
+                    <span className="flex-1 font-semibold uppercase">{brick.city}</span>
+                    <span className="text-xs">{brick.client}</span>
+                  </div>
+                  <div className="flex gap-2">
+                    <span className="flex-1 font-extrabold uppercase">{brick.deliveryTime}</span>
+                    <span className="text-xs">{brick.refNumber}</span>
+                  </div>
+                </>
+              )}
             </div>
             );
           })}
