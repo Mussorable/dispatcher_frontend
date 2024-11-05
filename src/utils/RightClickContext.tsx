@@ -18,6 +18,7 @@ const RightClickContext = forwardRef<HTMLDivElement, MousePosition>(({ actions }
     >
       <ul>
         {actions && Object.entries(actions).map(([actionName, actionFunc], key) => {
+          {if (actionName === 'Add') return <li key={key}><button className="px-6 py-2 hover:bg-green-500 bg-green-600 transition duration-100 w-full text-left" onClick={actionFunc}>{actionName}</button></li>}
           return <li key={key}><button className="px-6 py-2 hover:bg-gray-100 transition duration-75 w-full text-left" onClick={actionFunc}>{actionName}</button></li>
         })}
       </ul>

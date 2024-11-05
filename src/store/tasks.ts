@@ -26,7 +26,7 @@ const tasksSlice = createSlice({
   name: 'tasks',
   initialState,
   reducers: {
-    setBricks: (state) => {
+    addNewBrick: (state) => {
       const newBrick = {
         id: Date.now(),
         xPosition: Math.random() * 400,
@@ -39,6 +39,9 @@ const tasksSlice = createSlice({
       }
 
       state.bricks.push(newBrick);
+    },
+    updateBricks: (state, action: PayloadAction<Brick[]>) => {
+      state.bricks = action.payload;
     },
     setData: (state, action: PayloadAction<{ brickId: number; field: keyof RouteInformation; value: string }>) => {
       const { brickId, field, value } = action.payload;

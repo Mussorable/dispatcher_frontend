@@ -9,4 +9,15 @@
     background-color: #ebede8;
     background-size: 100px 50px;
   }
+  .no-scrollbar::-webkit-scrollbar {
+    display: none;
+  }
+  .no-scrollbar {
+    -ms-overflow-style: none;
+    scrollbar-width: none;
+  }
+  .todo-attension {
+    background: rgb(255,255,255);
+    background: linear-gradient(0deg, rgba(255,255,255,0) 0%, rgba(248,167,16,0.804359243697479) 67%);
+  }
 }
