@@ -1,6 +1,6 @@
 function SystemTree() {
   return(
-    <div className="w-[14%] border-r-2 h-full">
+    <div className="w-[14%] h-full border-r-4 border-r-sky-500">
       <p>SystemTree</p>
     </div>
   );

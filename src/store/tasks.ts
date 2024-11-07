@@ -7,6 +7,12 @@ interface RouteInformation {
   refNumber: string;
 }
 
+interface TaskInformation {
+  id: number;
+  text: string;
+  isImportant: boolean;
+}
+
 export interface Brick extends RouteInformation {
   id: number;
   xPosition: number;
@@ -16,15 +22,15 @@ export interface Brick extends RouteInformation {
 
 interface TasksState {
   bricks: Brick[];
-}
-
-const initialState: TasksState = {
-  bricks: []
+  tasks: TaskInformation[];
 }
 
 const tasksSlice = createSlice({
   name: 'tasks',
-  initialState,
+  initialState: {
+    bricks: [],
+    tasks: []
+  } as TasksState,
   reducers: {
     addNewBrick: (state) => {
       const newBrick = {
@@ -97,6 +103,32 @@ const tasksSlice = createSlice({
       if (brick) {
         brick.xPosition = xPosition;
         brick.yPosition = yPosition;
+      }
+    },
+    addTask: (state) => {
+      state.tasks = [
+        {
+          id: Date.now(),
+          text: '',
+          isImportant: false
+        },
+        ...state.tasks,
+      ];
+    },
+    setTaskText: (state, action: PayloadAction<{id: number; text: string}>) => {
+      const task = state.tasks.find(task => task.id === action.payload.id);
+      if (task) {
+        task.text = action.payload.text;
+      }
+    },
+    removeTask: (state, action: PayloadAction<number>) => {
+      const index = state.tasks.findIndex(task => task.id === action.payload);
+      state.tasks.splice(index, 1);
+    },
+    setImportance: (state, action: PayloadAction<number>) => {
+      const task = state.tasks.find(task => task.id === action.payload);
+      if (task) {
+        task.isImportant = !task.isImportant;
       }
     }
   }

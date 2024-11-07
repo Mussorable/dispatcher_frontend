@@ -2,11 +2,8 @@ import { useState, useRef, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { addNewBrick, setData, setIsUnloadingPlace, setBrickPosition, updateBricks } from "../../../store/store";
 
-import ImportantIcon from "../../../assets/important.svg?react";
-import AlertIcon from "../../../assets/alert.svg?react";
-import DeleteIcon from "../../../assets/minus.svg?react";
-
 import RightClickContext from "../../../utils/RightClickContext";
+import TodoList from "./tables/TodoList";
 
 import type { RootState } from "../../../store/store";
 import type { Brick } from "../../../store/tasks";
@@ -137,7 +134,7 @@ function TasksManagement() {
   };
 
   return(
-    <div className="flex h-1/4 border-b-2" onClick={handleClick}>
+    <div className="flex h-1/4 border-b-4 border-b-sky-500" onClick={handleClick}>
       {isContextVisible && <RightClickContext
         ref={contextMenuRef}
         actions={{
@@ -250,117 +247,8 @@ function TasksManagement() {
           })}
         </div>
       </div>
-      <div className="flex-1 border-r-2 relative bg-gray-100 overflow-hidden">
-          <div className="bg-white w-full h-full border-solid border-2">
-            <div className="flex gap-10 bg-gray-400 h-full">
-              <div className="flex-1 flex flex-col bg-gray-300">
-                <h4 className="text-center">To do:</h4>
-                <div className="flex-grow flex flex-col bg-white overflow-y-auto no-scrollbar">
-                  <ul className="flex-grow flex flex-col">
-                    <li className="flex px-1 todo-attension justify-between items-center align-middle">
-                      <span>item to repair</span>
-                      <div className="flex align-middle">
-                        <button className=""><ImportantIcon style={{color: "#b01302"}} /></button>
-                        <button className=""><AlertIcon /></button>
-                        <button className=""><DeleteIcon /></button>
-                        <button className=""></button>
-                      </div>
-                    </li>
-                    <li className="flex px-1 todo-attension justify-between items-center align-middle">
-                      <span>item to repair</span>
-                      <div className="flex align-middle">
-                        <button className=""></button>
-                        <button className=""></button>
-                        <button className=""></button>
-                        <button className=""></button>
-                      </div>
-                    </li>
-                    <li className="flex px-1 todo-attension justify-between items-center align-middle">
-                      <span>item to repair</span>
-                      <div className="flex align-middle">
-                        <button className=""></button>
-                        <button className=""></button>
-                        <button className=""></button>
-                        <button className=""></button>
-                      </div>
-                    </li>
-                    <li className="flex px-1 todo-attension justify-between items-center align-middle">
-                      <span>item to repair</span>
-                      <div>
-                        <button className=""></button>
-                        <button className=""></button>
-                        <button className=""></button>
-                        <button className=""></button>
-                      </div>
-                    </li>
-                    <li className="flex px-1 todo-attension justify-between items-center align-middle">
-                      <span>item to repair</span>
-                      <div>
-                        <button className=""></button>
-                        <button className=""></button>
-                        <button className=""></button>
-                        <button className=""></button>
-                      </div>
-                    </li>
-                    <li className="flex px-1 todo-attension justify-between items-center align-middle">
-                      <span>item to repair</span>
-                      <div>
-                        <button className=""></button>
-                        <button className=""></button>
-                        <button className=""></button>
-                        <button className=""></button>
-                      </div>
-                    </li>
-                    <li className="flex px-1 todo-attension justify-between items-center align-middle">
-                      <span>item to repair</span>
-                      <div>
-                        <button className=""></button>
-                        <button className=""></button>
-                        <button className=""></button>
-                        <button className=""></button>
-                      </div>
-                    </li>
-                    <li className="flex px-1 todo-attension justify-between items-center align-middle">
-                      <span>item to repair</span>
-                      <div>
-                        <button className=""></button>
-                        <button className=""></button>
-                        <button className=""></button>
-                        <button className=""></button>
-                      </div>
-                    </li>
-                    <li className="flex px-1 todo-attension justify-between items-center align-middle">
-                      <span>item to repair</span>
-                      <div>
-                        <button className=""></button>
-                        <button className=""></button>
-                        <button className=""></button>
-                        <button className=""></button>
-                      </div>
-                    </li>
-                    <li className="flex px-1 todo-attension justify-between items-center align-middle">
-                      <span>item to repair</span>
-                      <div>
-                        <button className=""></button>
-                        <button className=""></button>
-                        <button className=""></button>
-                        <button className=""></button>
-                      </div>
-                    </li>
-                    <li className="flex px-1 todo-attension justify-between items-center align-middle">
-                      <span>item to repair</span>
-                      <div>
-                        <button className=""></button>
-                        <button className=""></button>
-                        <button className=""></button>
-                        <button className=""></button>
-                      </div>
-                    </li>
-                  </ul>
-                </div>
-              </div>
-            </div>
-          </div>
+      <div className="flex-1 border-l-sky-500 border-l-4 relative bg-gray-100 overflow-hidden">
+        <TodoList />
       </div>
     </div>
   );
