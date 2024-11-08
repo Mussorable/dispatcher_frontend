@@ -37,7 +37,7 @@ function TodoList() {
   };
 
   return (
-    <div className="bg-white w-full h-full border-solid">
+    <div className="bg-white w-full h-full">
       <div className="flex h-full">
         <div className="flex-1 flex flex-col bg-gray-300">
           <h4 className="text-center text-md font-bold sea-salt text-white">
@@ -64,7 +64,8 @@ function TodoList() {
                 } else {
                   return (
                     <li key={task.id} className={`group flex pl-1 ${task.isImportant ? "todo-important" : "todo-attension"} justify-between items-center align-middle`}>
-                      <input 
+                      <input
+                        className="h-5 my-1 border-[1px] border-zinc-600 rounded-sm min-w-[300px] bg-gray-300 focus:bg-white"
                         type="text" 
                         autoFocus 
                         value={inputValue}

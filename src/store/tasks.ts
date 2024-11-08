@@ -118,7 +118,7 @@ const tasksSlice = createSlice({
     setTaskText: (state, action: PayloadAction<{id: number; text: string}>) => {
       const task = state.tasks.find(task => task.id === action.payload.id);
       if (task) {
-        task.text = action.payload.text;
+        task.text = action.payload.text.slice(0, 72);
       }
     },
     removeTask: (state, action: PayloadAction<number>) => {
