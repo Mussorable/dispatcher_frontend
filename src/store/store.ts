@@ -1,10 +1,13 @@
 import { configureStore, combineReducers } from "@reduxjs/toolkit";
+
 import authSlice from "./auth";
 import tasksSlice from "./tasks";
+import explorerSlice from "./explorer";
 
 const rootReducer = combineReducers({
   auth: authSlice.reducer,
-  tasks: tasksSlice.reducer
+  tasks: tasksSlice.reducer,
+  explorer: explorerSlice.reducer
 })
 
 const store = configureStore({
@@ -13,6 +16,7 @@ const store = configureStore({
 
 const {setUsername, setPassword, setRepeatPassword, setEmail, setIsAuthenticated} = authSlice.actions;
 const {addNewBrick, setData, setIsUnloadingPlace, setBrickPosition, updateBricks, addTask, removeTask, setImportance, setTaskText} = tasksSlice.actions;
+const {createFolder, createObject, deleteItem} = explorerSlice.actions;
 
 export type RootState = ReturnType<typeof store.getState>;
 export {
@@ -30,5 +34,8 @@ export {
   addTask,
   removeTask,
   setImportance,
-  setTaskText
+  setTaskText,
+  createFolder,
+  createObject,
+  deleteItem
 };

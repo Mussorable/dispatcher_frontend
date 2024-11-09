@@ -1,5 +1,5 @@
 import ProfileBrick from "./dispatcher/tree/ProfileBrick";
-import Explorer from "./dispatcher/tree/Explrorer";
+import Explorer from "./dispatcher/tree/Explorer";
 
 function SystemTree() {
   return(
