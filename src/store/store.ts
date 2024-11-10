@@ -16,7 +16,7 @@ const store = configureStore({
 
 const {setUsername, setPassword, setRepeatPassword, setEmail, setIsAuthenticated} = authSlice.actions;
 const {addNewBrick, setData, setIsUnloadingPlace, setBrickPosition, updateBricks, addTask, removeTask, setImportance, setTaskText} = tasksSlice.actions;
-const {createFolder, createObject, deleteItem} = explorerSlice.actions;
+const {createFolder, createObject, deleteItem, changeUnwrap} = explorerSlice.actions;
 
 export type RootState = ReturnType<typeof store.getState>;
 export {
@@ -37,5 +37,6 @@ export {
   setTaskText,
   createFolder,
   createObject,
-  deleteItem
+  deleteItem,
+  changeUnwrap
 };

@@ -28,9 +28,7 @@ function Explorer() {
 
   return (
     <div className="w-full bg-slate-100 h-full overflow-hidden pt-1 px-2">
-      {Object.values(storage).map((item, key) => <TreeItem key={key} title={item.title} />)}
-      <TreeItem title="Trucks" />
-      <TreeItem title="Trailers" />
+      {Object.values(storage).map((element, key) => <TreeItem key={key} element={element} />)}
     </div>
   );
 }

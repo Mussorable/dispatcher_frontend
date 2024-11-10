@@ -4,12 +4,12 @@ interface ExplorerItem {
     title: string;
 }
 
-interface ExplorerObject extends ExplorerItem {
+export interface ExplorerObject extends ExplorerItem {
     isFolder: false;
     content: string;
 }
 
-interface ExplorerFolder extends ExplorerItem {
+export interface ExplorerFolder extends ExplorerItem {
     isFolder: true;
     isUnwrapped: boolean;
     children: ExplorerItem[];
@@ -33,6 +33,12 @@ const explorerSlice = createSlice({
         },
         deleteItem: (state, action: PayloadAction<string>) => {
             delete state.storage[action.payload];
+        },
+        changeUnwrap: (state, action: PayloadAction<string>) => {
+            const folder = state.storage[action.payload];
+            if (folder && folder.isFolder) {
+                folder.isUnwrapped = !folder.isUnwrapped;
+            }
         }
     }
 });
