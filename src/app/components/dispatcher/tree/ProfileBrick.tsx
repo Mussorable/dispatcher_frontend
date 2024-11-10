@@ -1,6 +1,6 @@
 function ProfileBrick() {
   return (
-    <div className="w-full border-b-2 border-b-sky-500 bg-slate-300">
+    <div className="w-full border-b-2 border-b-sky-500 shady-lane">
       <div className="text-right px-2">
         <h2 className="text-xl font-semibold italic">FULL NAME</h2>
       </div>
