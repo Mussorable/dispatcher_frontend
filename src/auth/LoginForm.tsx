@@ -1,12 +1,12 @@
 import { useDispatch, useSelector } from "react-redux";
 import { Link, useNavigate } from "react-router-dom";
-import { useEffect } from "react";
 
 import { setUsername, setPassword, setIsAuthenticated } from "../store/store";
 import { FetchWrapper } from "../utils/FetchWrapper";
 
 import type { RootState } from "../store/store";
 import type {ErrorAuthResponse, SuccessAuthResponse, UserAuth} from "./types";
+import React from "react";
 
 function LoginForm() {
   const dispatch = useDispatch();
@@ -16,10 +16,6 @@ function LoginForm() {
   const password = useSelector((state: RootState) => state.auth.password);
 
   const fetchWrapper = new FetchWrapper(import.meta.env.VITE_TEST_URL);
-
-  useEffect(() => {
-    sessionStorage.setItem('accessToken', 'temporary_key');
-  }, []);
 
   const handleSetUsername = (username: string): void => {
     dispatch(setUsername(username));
@@ -39,9 +35,9 @@ function LoginForm() {
     handleSetUsername('');
     handleSetPassword('');
 
-    if ('access_token' in response) {
+    if ('token' in response) {
       dispatch(setIsAuthenticated(true));
-      sessionStorage.setItem('accessToken', response.access_token);
+      sessionStorage.setItem('accessToken', response.token);
 
       navigate('/dispatcher');
     }

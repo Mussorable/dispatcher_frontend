@@ -40,11 +40,9 @@ function RegistrationForm() {
         password
       });
 
-      console.log(response);
-
-      if ('access_token' in response) {
+      if ('token' in response) {
         dispatch(setIsAuthenticated(true));
-        sessionStorage.setItem('accessToken', response.access_token);
+        sessionStorage.setItem('accessToken', response.token);
 
         navigate('/dispatcher');
       }
