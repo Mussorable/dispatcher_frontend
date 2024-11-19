@@ -1,11 +1,40 @@
-function AddTrailer() {
+import {addTrailer, AppDispatch} from "../../../store/store.ts";
+import {useDispatch} from "react-redux";
+import {useState} from "react";
+import {Trailer} from "../../../store/trailers.ts";
+
+interface AddTrailerProps {
+  trailers: Trailer[];
+}
+
+function AddTrailer({trailers}: AddTrailerProps) {
+  const dispatch: AppDispatch = useDispatch();
+  const [trailer, setTrailer] = useState<Trailer>({
+    number: ''
+  });
+
+  const handleSubmitForm = (event: React.FormEvent<HTMLFormElement>) => {
+    event.preventDefault();
+
+    if (trailers.some(t => t.number === trailer.number)) {
+      alert('Trailer with this number already exists');
+      return;
+    }
+
+    dispatch(addTrailer(trailer));
+
+    setTrailer({
+      number: ''
+    });
+  };
+
   return (
     <div className="px-4 pt-4 flex-1">
       <h5 className="font-semibold">Add Trailer</h5>
-      <form action="" className="mt-2">
+      <form action="" className="mt-2" onSubmit={handleSubmitForm}>
         <div className="flex align-middle ml-4 mt-2">
-          <label htmlFor="truck-number" className="block self-center w-28">Trailer number:</label>
-          <input className="ml-3 px-2 py-1 border-2 border-gray-700 rounded-md focus:outline-none" id="truck-number" type="text" placeholder="7-digit number" />
+          <label htmlFor="trailer-number" className="block self-center w-28">Trailer number:</label>
+          <input value={trailer.number} onChange={e => setTrailer({number: e.currentTarget.value})} className="ml-3 px-2 py-1 border-2 border-gray-700 rounded-md focus:outline-none" id="trailer-number" type="text" placeholder="7-digit number" />
         </div>
         <div className="flex aign-middle ml-4 mt-2">
           <label htmlFor="trucks-list" className="block self-center w-28">Current truck:</label>

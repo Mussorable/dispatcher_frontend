@@ -5,6 +5,8 @@ import tasksSlice from "./tasks";
 import explorerSlice from "./explorer";
 import userSlice from "./user";
 import driversSlice from "./drivers.ts";
+import trailersSlice from "./trailers.ts";
+import trucksSlice from "./trucks.ts";
 
 const rootReducer = combineReducers({
     auth: authSlice.reducer,
@@ -12,6 +14,8 @@ const rootReducer = combineReducers({
     explorer: explorerSlice.reducer,
     user: userSlice.reducer,
     drivers: driversSlice.reducer,
+    trailers: trailersSlice.reducer,
+    trucks: trucksSlice.reducer,
 })
 
 const store = configureStore({
@@ -24,6 +28,8 @@ const {createFolder, createObject, deleteItem, changeUnwrap} = explorerSlice.act
 const {setInformation} = userSlice.actions;
 
 import {addDriver, getDrivers} from "./drivers.ts";
+import {addTrailer, getTrailers} from "./trailers.ts";
+import {addTruck, getTrucks} from "./trucks.ts";
 
 
 export type RootState = ReturnType<typeof store.getState>;
@@ -51,5 +57,9 @@ export {
     changeUnwrap,
     setInformation,
     addDriver,
-    getDrivers
+    getDrivers,
+    addTrailer,
+    getTrailers,
+    addTruck,
+    getTrucks,
 };
