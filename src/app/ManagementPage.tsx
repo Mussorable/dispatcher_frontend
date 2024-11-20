@@ -16,7 +16,7 @@ function ManagementPage() {
 
     useEffect(() => {
         dispatch(getDrivers());
-    }, []);
+    }, [dispatch]);
 
     return(
         <>

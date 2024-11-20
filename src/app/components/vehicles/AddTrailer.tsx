@@ -1,14 +1,17 @@
-import {addTrailer, AppDispatch} from "../../../store/store.ts";
-import {useDispatch} from "react-redux";
-import {useState} from "react";
+import { addTrailer, AppDispatch, RootState, setHighlightTrailers } from "../../../store/store.ts";
+import { useDispatch, useSelector } from "react-redux";
+import React, { FormEvent, useState } from "react";
 import {Trailer} from "../../../store/trailers.ts";
+import { Truck } from "../../../store/trucks.ts";
 
 interface AddTrailerProps {
   trailers: Trailer[];
+  trucks: Truck[];
 }
 
-function AddTrailer({trailers}: AddTrailerProps) {
+function AddTrailer({trailers, trucks}: AddTrailerProps) {
   const dispatch: AppDispatch = useDispatch();
+  const highlight = useSelector((state: RootState) => state.trucks.highlight);
   const [trailer, setTrailer] = useState<Trailer>({
     number: ''
   });
@@ -22,7 +25,17 @@ function AddTrailer({trailers}: AddTrailerProps) {
     }
 
     dispatch(addTrailer(trailer));
+    const timer = setTimeout(() => {
+      dispatch(setHighlightTrailers(false));
+    }, 600);
 
+    handleReset(event);
+
+    return () => clearTimeout(timer);
+  };
+
+  const handleReset = (event: FormEvent) => {
+    event.preventDefault();
     setTrailer({
       number: ''
     });
@@ -31,20 +44,16 @@ function AddTrailer({trailers}: AddTrailerProps) {
   return (
     <div className="px-4 pt-4 flex-1">
       <h5 className="font-semibold">Add Trailer</h5>
-      <form action="" className="mt-2" onSubmit={handleSubmitForm}>
+      <form action="" className="mt-2" onSubmit={handleSubmitForm} onReset={handleReset}>
         <div className="flex align-middle ml-4 mt-2">
           <label htmlFor="trailer-number" className="block self-center w-28">Trailer number:</label>
           <input value={trailer.number} onChange={e => setTrailer({number: e.currentTarget.value})} className="ml-3 px-2 py-1 border-2 border-gray-700 rounded-md focus:outline-none" id="trailer-number" type="text" placeholder="7-digit number" />
         </div>
         <div className="flex aign-middle ml-4 mt-2">
           <label htmlFor="trucks-list" className="block self-center w-28">Current truck:</label>
-          <select className="ml-3 px-2 py-1 border-2 border-gray-700 rounded-md focus:outline-none" name="" id="trucks-list">
+          <select disabled={trucks.length == 0} className={ `ml-3 px-2 py-1 border-2 border-gray-700 rounded-md transition-colors duration-500 ease-in focus:outline-none ${highlight ? 'bg-green-200' : ''}` } name="" id="trucks-list">
             <option value="">Optional</option>
-            <option value="truck-1">truck-1</option>
-            <option value="truck-2">truck-2</option>
-            <option value="truck-3">truck-3</option>
-            <option value="truck-4">truck-4</option>
-            <option value="truck-5">truck-5</option>
+            {trucks && trucks.map(({number}) => <option value={number} key={number}>{number}</option>)}
           </select>
         </div>
         <div className="flex aign-middle ml-4 mt-2 w-1/3 gap-4">

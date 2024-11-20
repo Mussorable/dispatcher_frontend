@@ -1,7 +1,7 @@
-import React, {useState} from "react";
+import { ChangeEvent, FormEvent, useState } from "react";
 import {useDispatch} from "react-redux";
 import {addDriver, Driver} from "../../../store/drivers.ts";
-import {AppDispatch} from "../../../store/store.ts";
+import { AppDispatch, setHighlightDrivers } from "../../../store/store.ts";
 import {DriverManagementProps} from "../../ManagementPage.tsx";
 
 function AddDriver({drivers}: DriverManagementProps) {
@@ -12,7 +12,7 @@ function AddDriver({drivers}: DriverManagementProps) {
         driverLicense: '',
     });
 
-    const handleSubmitForm = (event: React.FormEvent) => {
+    const handleSubmitForm = (event: FormEvent) => {
         event.preventDefault();
 
         if (drivers.some(d => d.number === driver.number || d.driverLicense === driver.driverLicense)) {
@@ -22,14 +22,16 @@ function AddDriver({drivers}: DriverManagementProps) {
 
         dispatch(addDriver(driver));
 
-        setDriver({
-            number: '',
-            fullName: '',
-            driverLicense: '',
-        });
+        const timer = setTimeout(() => {
+            dispatch(setHighlightDrivers(false));
+        }, 600);
+
+        handleReset(event);
+
+        return () => clearTimeout(timer);
     };
 
-    const handleInputChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+    const handleInputChange = (event: ChangeEvent<HTMLInputElement>) => {
         const {id, value} = event.target;
         setDriver({
             ...driver,
@@ -37,10 +39,19 @@ function AddDriver({drivers}: DriverManagementProps) {
         });
     }
 
+    const handleReset = (event: FormEvent) => {
+        event.preventDefault();
+        setDriver({
+            number: '',
+            fullName: '',
+            driverLicense: '',
+        });
+    }
+
     return(
         <div className="px-4 pt-4 flex-1">
             <h5 className="font-semibold">Add Driver</h5>
-            <form action="" className="mt-2" onSubmit={handleSubmitForm}>
+            <form action="" className="mt-2" onSubmit={handleSubmitForm} onReset={handleReset}>
                 <div className="flex align-middle ml-4 mt-2">
                     <label htmlFor="fullName" className="block self-center w-32">Full name:</label>
                     <input value={driver.fullName} required onChange={handleInputChange} className="ml-3 px-2 py-1 border-2 border-gray-700 rounded-md focus:outline-none"

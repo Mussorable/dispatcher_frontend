@@ -1,7 +1,7 @@
-import type {Vehicle} from "./trucks.ts";
-import {createAsyncThunk, createSlice} from "@reduxjs/toolkit";
-import {FetchWrapper} from "../utils/FetchWrapper.ts";
-import {ServerResponse, ServerResponseTrailers} from "../app/types.ts";
+import type { Vehicle } from "./trucks.ts";
+import { createAsyncThunk, createSlice, PayloadAction } from "@reduxjs/toolkit";
+import { FetchWrapper } from "../utils/FetchWrapper.ts";
+import { ServerResponseAPI } from "../app/types.ts";
 
 const fetchWrapper = new FetchWrapper(import.meta.env.VITE_TEST_URL);
 
@@ -12,31 +12,31 @@ export interface Trailer extends Vehicle {
 interface TrailersState {
     trailers: Trailer[];
     isLoading: boolean;
+    highlight: boolean;
 }
 
 export const getTrailers = createAsyncThunk(
     'trailers/getTrailers',
     async () => {
-        const response = await fetchWrapper.get<ServerResponseTrailers>('/vehicles/get-all/trailers');
+        const response = await fetchWrapper.get<ServerResponseAPI<Trailer[]>>('/vehicles/get-all/trailers');
 
-        if (response.error) {
-            console.error(response.error);
+        if (response.errors) {
+            console.error(response.errors);
         }
-        return response.trailers;
+        return response.data;
     }
 )
 
 export const addTrailer = createAsyncThunk(
     'trailers/addTrailer',
     async (trailer: Trailer) => {
-        const response = await fetchWrapper.post<ServerResponse<string>>('/vehicles/add/trailer', {
+        const response = await fetchWrapper.post<ServerResponseAPI<Trailer>>('/vehicles/add/trailer', {
             number: trailer.number
         });
 
-        if (response.error) {
-            console.log(response.error);
+        if (response.errors) {
+            console.error(response.errors);
         }
-
         return trailer;
     }
 );
@@ -46,15 +46,22 @@ export const trailersSlice = createSlice({
     initialState: {
         trailers: [],
         isLoading: false,
+        highlight: false
     } as TrailersState,
-    reducers: {},
+    reducers: {
+        setHighlightTrailers: (state, action: PayloadAction<boolean>) => {
+            state.highlight = action.payload;
+        }
+    },
     extraReducers: (builder) => {
         builder
             .addCase(getTrailers.pending, state => {
                 state.isLoading = true;
             })
             .addCase(getTrailers.fulfilled, (state, action) => {
-                state.trailers = action.payload;
+                if (action.payload) {
+                    state.trailers = action.payload;
+                }
                 state.isLoading = false;
             })
             .addCase(addTrailer.pending, state => {
@@ -67,6 +74,7 @@ export const trailersSlice = createSlice({
                     number
                 });
                 state.isLoading = false;
+                state.highlight = true;
             })
     }
 });

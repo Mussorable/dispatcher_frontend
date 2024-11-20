@@ -6,15 +6,17 @@ import DeleteTruck from "./components/vehicles/DeleteTruck";
 import AddTrailer from "./components/vehicles/AddTrailer";
 import DeleteTrailer from "./components/vehicles/DeleteTrailer";
 import {useDispatch, useSelector} from "react-redux";
-import {AppDispatch, getTrailers, RootState} from "../store/store.ts";
+import { AppDispatch, getTrailers, getTrucks, RootState } from "../store/store.ts";
 import {useEffect} from "react";
 
 function VehiclesPage() {
   const dispatch: AppDispatch = useDispatch();
   const trailers = useSelector((state: RootState) => state.trailers.trailers);
+  const trucks = useSelector((state: RootState) => state.trucks.trucks);
 
   useEffect(() => {
     dispatch(getTrailers());
+    dispatch(getTrucks());
   }, [dispatch]);
 
   return(
@@ -27,11 +29,11 @@ function VehiclesPage() {
           <h3 className="text-xl flex-1 font-semibold">Trailers</h3>
         </div>
         <div className="flex relative mx-4">
-          <AddTruck trailers={trailers} />
-          <AddTrailer trailers={trailers} />
+          <AddTruck trailers={trailers} trucks={trucks} />
+          <AddTrailer trailers={trailers} trucks={trucks} />
         </div>
         <div className="flex relative mx-4">
-          <DeleteTruck />
+          <DeleteTruck trucks={trucks} />
           <DeleteTrailer trailers={trailers} />
         </div>
       </div>

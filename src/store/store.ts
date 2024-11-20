@@ -25,6 +25,9 @@ const store = configureStore({
 const {setUsername, setPassword, setRepeatPassword, setEmail, setIsAuthenticated} = authSlice.actions;
 const {addNewBrick, setData, setIsUnloadingPlace, setBrickPosition, updateBricks, addTask, removeTask, setImportance, setTaskText} = tasksSlice.actions;
 const {createFolder, createObject, deleteItem, changeUnwrap} = explorerSlice.actions;
+const {setHighlightTrailers} = trailersSlice.actions;
+const {setHighlightTrucks} = trucksSlice.actions;
+const {setHighlightDrivers} = driversSlice.actions;
 const {setInformation} = userSlice.actions;
 
 import {addDriver, getDrivers} from "./drivers.ts";
@@ -56,6 +59,9 @@ export {
     deleteItem,
     changeUnwrap,
     setInformation,
+    setHighlightTrailers,
+    setHighlightTrucks,
+    setHighlightDrivers,
     addDriver,
     getDrivers,
     addTrailer,
