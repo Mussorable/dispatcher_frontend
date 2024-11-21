@@ -25,7 +25,7 @@ export const getTrailers = createAsyncThunk(
         }
         return response.data;
     }
-)
+);
 
 export const addTrailer = createAsyncThunk(
     'trailers/addTrailer',
@@ -49,9 +49,9 @@ export const trailersSlice = createSlice({
         highlight: false
     } as TrailersState,
     reducers: {
-        setHighlightTrailers: (state, action: PayloadAction<boolean>) => {
-            state.highlight = action.payload;
-        }
+            setHighlightTrailers: (state, action: PayloadAction<boolean>) => {
+                state.highlight = action.payload;
+            }
     },
     extraReducers: (builder) => {
         builder

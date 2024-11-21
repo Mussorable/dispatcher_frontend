@@ -33,6 +33,7 @@ const {setInformation} = userSlice.actions;
 import {addDriver, getDrivers} from "./drivers.ts";
 import {addTrailer, getTrailers} from "./trailers.ts";
 import {addTruck, getTrucks} from "./trucks.ts";
+import {getAuth} from "./user";
 
 
 export type RootState = ReturnType<typeof store.getState>;
@@ -68,4 +69,5 @@ export {
     getTrailers,
     addTruck,
     getTrucks,
+    getAuth
 };

@@ -2,14 +2,21 @@ import { useDispatch } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import { Link } from "react-router-dom";
 import { setIsAuthenticated } from "../../store/store";
+import { FetchWrapper } from "../../utils/FetchWrapper.ts";
+import { ServerResponseAPI } from "../types.ts";
 
 function Header() {
+  const fetchWrapper = new FetchWrapper(import.meta.env.VITE_TEST_URL);
   const dispatch = useDispatch();
   const navigate = useNavigate();
 
   function handleLogoutButton(): void {
-    dispatch(setIsAuthenticated(false));
-    sessionStorage.clear();
+    fetchWrapper.get<ServerResponseAPI>('/auth/logout')
+      .then(response => {
+        if (response.ok) {
+          dispatch(setIsAuthenticated(false));
+        }
+      })
     navigate('/auth/login');
   }
   

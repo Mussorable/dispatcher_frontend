@@ -1,7 +1,7 @@
 import { useDispatch, useSelector } from "react-redux";
 import { useEffect } from "react";
 
-import { createFolder, createObject, deleteItem } from "../../../../store/store";
+import { createFolder } from "../../../../store/store";
 
 import type { RootState } from "../../../../store/store";
 

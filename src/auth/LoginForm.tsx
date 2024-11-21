@@ -1,12 +1,13 @@
 import { useDispatch, useSelector } from "react-redux";
 import { Link, useNavigate } from "react-router-dom";
 
-import { setUsername, setPassword, setIsAuthenticated } from "../store/store";
+import { setUsername, setPassword } from "../store/store";
 import { FetchWrapper } from "../utils/FetchWrapper";
 
 import type { RootState } from "../store/store";
-import type {ErrorAuthResponse, SuccessAuthResponse, UserAuth} from "./types";
+import type {UserAuth} from "./types";
 import React from "react";
+import { ServerResponseAPI } from "../app/types.ts";
 
 function LoginForm() {
   const dispatch = useDispatch();
@@ -27,20 +28,17 @@ function LoginForm() {
   async function handleSubmitLoginForm(event: React.FormEvent) {
     event.preventDefault();
 
-    const response = await fetchWrapper.post<SuccessAuthResponse | ErrorAuthResponse, UserAuth>('/auth/login', {
+    const response = await fetchWrapper.post<ServerResponseAPI, UserAuth>('/auth/login', {
       username,
       password
     });
 
+    console.log(response);
+
     handleSetUsername('');
     handleSetPassword('');
 
-    if ('token' in response) {
-      dispatch(setIsAuthenticated(true));
-      sessionStorage.setItem('accessToken', response.token);
-
-      navigate('/dispatcher');
-    }
+    navigate('/dispatcher');
   }
   
   return (

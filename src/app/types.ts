@@ -7,7 +7,8 @@ export interface ParentComponent {
   children: React.ReactNode;
 }
 
-export interface ServerResponseAPI<T> {
+export interface ServerResponseAPI<T=never> {
+  status: number;
   message: string;
   data?: T;
   errors?: string;

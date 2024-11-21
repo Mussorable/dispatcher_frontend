@@ -8,20 +8,34 @@ export class FetchWrapper {
   }
 
   async get<T>(endpoint: string): Promise<T> {
-    return fetch(this.#baseURL + endpoint).then((response) => response.json());
+    return fetch(this.#baseURL + endpoint, {
+      method: "GET",
+      credentials: "include",
+    }).then((response) => {
+      if (!response.ok) {
+        console.error(response.statusText);
+      }
+      return response.json();
+    });
   }
 
-  post<T, B = DefaultBody>(endpoint: string, body: B): Promise<T> {
+  async post<T, B = DefaultBody>(endpoint: string, body: B): Promise<T> {
     return this.#send<B>("POST", endpoint, body);
   }
 
-  #send<B>(method: string, endpoint: string, body?: B) {
+  async #send<B>(method: string, endpoint: string, body?: B) {
     return fetch(this.#baseURL + endpoint, {
       method,
+      credentials: "include",
       headers: {
         "Content-Type": "application/json"
       },
       body: JSON.stringify(body)
-    }).then(response => response.json());
+    }).then(response => {
+      if (!response.ok) {
+        console.error(response.statusText);
+      }
+      return response.json();
+    });
   }
 }
