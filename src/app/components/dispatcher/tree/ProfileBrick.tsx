@@ -1,28 +1,13 @@
-import {useEffect, useState} from "react";
-import {UserTokenInformation} from "../../../../auth/types.ts";
-
-import {jwtDecode} from "jwt-decode";
+import { useSelector } from "react-redux";
+import { RootState } from "../../../../store/store.ts";
 
 function ProfileBrick() {
-    const [username, setUsername] = useState('');
-
-    useEffect(() => {
-        const token = sessionStorage.getItem('accessToken');
-
-        if (token) {
-            try {
-                const decodedToken: UserTokenInformation = jwtDecode(token);
-                setUsername(decodedToken.username.replace('_', ' '));
-            } catch (err) {
-                console.log('Failed to decode token', err);
-            }
-        }
-    }, []);
+    const user = useSelector((state: RootState) => state.user.user);
 
     return (
         <div className="w-full border-b-2 border-b-sky-500 shady-lane">
             <div className="text-right px-2">
-                <h2 className="text-xl font-semibold italic">{username}</h2>
+                { user && <h2 className="text-xl font-semibold italic">{ user.name }</h2> }
             </div>
             <div className="flex justify-end gap-2 px-2">
                 <button className="text-xs text-blue-600 hover:text-blue-900">Settings</button>

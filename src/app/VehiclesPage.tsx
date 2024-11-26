@@ -8,6 +8,7 @@ import DeleteTrailer from "./components/vehicles/DeleteTrailer";
 import {useDispatch, useSelector} from "react-redux";
 import { AppDispatch, getTrailers, getTrucks, RootState } from "../store/store.ts";
 import {useEffect} from "react";
+import PinVehicle from "./components/vehicles/PinVehicle.tsx";
 
 function VehiclesPage() {
   const dispatch: AppDispatch = useDispatch();
@@ -35,6 +36,12 @@ function VehiclesPage() {
         <div className="flex relative mx-4">
           <DeleteTruck trucks={trucks} />
           <DeleteTrailer trailers={trailers} />
+        </div>
+        <div className="flex relative mx-4">
+          <h3 className="text-xl flex-1 font-semibold">Pin to Me</h3>
+        </div>
+        <div className="flex relative mx-4">
+          <PinVehicle trucks={trucks} />
         </div>
       </div>
     </>

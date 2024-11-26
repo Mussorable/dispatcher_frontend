@@ -3,6 +3,7 @@ import { ServerResponseAPI } from "../app/types.ts";
 import { FetchWrapper } from "../utils/FetchWrapper.ts";
 
 const fetchWrapper = new FetchWrapper(import.meta.env.VITE_TEST_URL);
+const savedUser = JSON.parse(sessionStorage.getItem('user') || 'null');
 
 export interface User {
     name: string;
@@ -19,7 +20,6 @@ export const getAuth = createAsyncThunk(
     'user/getAuth',
     async () => {
         const response = await fetchWrapper.get<ServerResponseAPI>('/auth/check');
-        console.log(response);
         return response.message == 'User is authenticated';
     }
 );
@@ -27,16 +27,21 @@ export const getAuth = createAsyncThunk(
 const userSlice = createSlice({
     name: "user",
     initialState: {
-        user: null,
+        user: savedUser,
         isAuthenticated: false,
         isLoading: true,
     } as UserState,
     reducers: {
         setInformation: (state, action) => {
             state.user = {
-                name: action.payload.name,
+                name: action.payload.name.replace('_', ' '),
                 email: action.payload.email
             }
+            sessionStorage.setItem('user', JSON.stringify(state.user));
+        },
+        clearInformation: (state) => {
+            state.user = null;
+            sessionStorage.removeItem('user');
         }
     },
     extraReducers: (builder) => {

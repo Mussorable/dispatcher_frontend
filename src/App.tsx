@@ -10,10 +10,12 @@ import VehiclesPage from "./app/VehiclesPage";
 import RoutesPage from "./app/RoutesPage";
 import ManagementPage from "./app/ManagementPage";
 import SettingsPage from "./app/SettingsPage";
+import Notification from "./utils/Notification.tsx";
 
 function App() {
   return (
     <BrowserRouter>
+      <Notification />
       <Routes>
         <Route path="/auth/" element={<Auth/>}>
           <Route path="login" element={<LoginForm />}/>

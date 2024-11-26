@@ -1,9 +1,10 @@
-import { useNavigate, Outlet } from "react-router-dom";
+import { useNavigate, Outlet, useLocation } from "react-router-dom";
 import { AppDispatch, getAuth, RootState } from "../store/store.ts";
 import { useDispatch, useSelector } from "react-redux";
 import { useEffect } from "react";
 
 function ProtectedPage() {
+    const location = useLocation();
     const navigate = useNavigate();
     const dispatch: AppDispatch = useDispatch();
     const isAuthenticated = useSelector((state: RootState) => state.user.isAuthenticated);
@@ -17,7 +18,11 @@ function ProtectedPage() {
         if (!isAuthenticated && !isLoading) {
             navigate("/auth/login", { replace: true });
         }
-    }, [isAuthenticated, isLoading, navigate]);
+
+        if (location.pathname === '/') {
+            navigate("/dispatcher", { replace: true });
+        }
+    }, [isAuthenticated, isLoading, location.pathname, navigate]);
 
     return (
         <>

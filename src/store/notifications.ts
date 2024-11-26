@@ -9,32 +9,22 @@ interface NotificationRate {
 }
 
 interface Notification {
-  id: number
   message: string;
   rate: keyof NotificationRate;
 }
 
-interface NotificationsState {
-  notifications: Notification[];
-}
-
-const notificationsSlice = createSlice({
-  name: "notifications",
+export const notificationSlice = createSlice({
+  name: 'notification',
   initialState: {
-    notifications: [],
-  } as NotificationsState,
+    message: '',
+    rate: "information"
+  } as Notification,
   reducers: {
-    addNotification: (state, action: PayloadAction<{message: string; rate: keyof NotificationRate}>) => {
-      state.notifications.push({
-        id: Date.now(),
-        message: action.payload.message,
-        rate: action.payload.rate
-      });
-    },
-    removeNotification: (state, action: PayloadAction<number>) => {
-      state.notifications = state.notifications.filter(notification => notification.id !== action.payload);
+    setNotification: (state, action: PayloadAction<Notification>) => {
+      state.message = action.payload.message;
+      state.rate = action.payload.rate;
     }
   }
 });
 
-export default notificationsSlice;
+export default notificationSlice;
