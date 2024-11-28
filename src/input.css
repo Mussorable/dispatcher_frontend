@@ -1,0 +1,33 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer utilities {
+  .bg-grid {
+    background-image: linear-gradient(90deg, #d7e3cf 1px, transparent 1px),
+                      linear-gradient(180deg, #d7e3cf 1px, transparent 1px);
+    background-color: #ebede8;
+    background-size: 100px 50px;
+  }
+  .no-scrollbar::-webkit-scrollbar {
+    display: none;
+  }
+  .no-scrollbar {
+    -ms-overflow-style: none;
+    scrollbar-width: none;
+  }
+  .todo-attension {
+    background: rgb(184,154,53);
+    background: linear-gradient(0deg, rgba(184,154,53,1) 0%, rgba(248,167,16,0.804359243697479) 67%);
+  }
+  .todo-important {
+    background: rgb(195,45,26);
+    background: linear-gradient(0deg, rgba(195,45,26,1) 0%, rgba(248,16,16,0.804359243697479) 67%);
+  }
+  .sea-salt {
+    background: linear-gradient(90deg, #4b6cb7 0%, #182848 100%);
+  }
+  .shady-lane {
+    background: linear-gradient(90deg, #3F2B96 0%, #A8C0FF 100%);
+  }
+}

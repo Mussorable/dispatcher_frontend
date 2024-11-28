@@ -4,7 +4,12 @@
     "esModuleInterop": true,
     "allowJs": true,
     "noUncheckedIndexedAccess": true,
-    "strict": true
+    "allowImportingTsExtensions": true,
+    "noEmit": true,
+    "emitDeclarationOnly": true,
+    "composite": true,
+    "strict": true,
+    "types": ["vite-plugin-svgr/client"]
   },
   "files": [],
   "references": [
